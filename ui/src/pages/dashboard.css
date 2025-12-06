@@ -1,0 +1,743 @@
+/* ============================================================
+   BASE / TOKENS
+============================================================ */
+:root {
+  --bg: #f5f7fb;
+  --bg-card: #ffffff;
+  --bg-hover: #f1f3f9;
+  --bg-hover-strong: #e7ebf5;
+
+  --border: #d9dde7;
+  --border-soft: #e4e7f0;
+
+  --text: #181b22;
+  --text-soft: #6b7280;
+  --text-muted: #a0a6b3;
+
+  --accent: #4c6ef5;
+  --accent-hover: #3b5bdb;
+
+  --danger: #e03131;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Pequeno helper pra textos genéricos do dashboard */
+.dash-info {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+/* ============================================================
+   SHELL / TOPBAR
+============================================================ */
+.dash-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* TOPBAR */
+.dash-topbar {
+  height: 56px;
+  padding: 0 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.dash-topbar-left,
+.dash-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-logo-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.topbar-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar-username {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+/* BOTÃO DE LOGOUT */
+.topbar-logout-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.15s ease;
+}
+
+.topbar-logout-btn:hover {
+  background: var(--bg-hover);
+  border-color: #d9534f;
+  color: #d9534f;
+}
+
+/* ============================================================
+   GRID PRINCIPAL
+============================================================ */
+.dash-wrapper {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 260px minmax(320px, 380px) minmax(0, 1fr);
+  min-height: 0;
+}
+
+/* Base de coluna (opcional, mas deixa consistente) */
+.dash-col {
+  min-height: 0;
+}
+
+/* ============================================================
+   COLUNA ESQUERDA
+============================================================ */
+.dash-col-left {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-soft);
+  padding: 24px;
+  display: flex;
+}
+
+.dash-left-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+}
+
+.dash-panel-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dash-panel-subtitle {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+/* Botão "Nova credencial" */
+.dash-btn-primary {
+  margin-top: 16px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  background: var(--accent);
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.dash-btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-0.5px);
+}
+
+.btn-plus {
+  font-size: 18px;
+}
+
+/* NAV */
+.dash-nav {
+  margin-top: 20px;
+}
+
+.dash-nav-item {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  padding: 8px 10px;
+  font-size: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.dash-nav-item:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.dash-nav-item.active {
+  background: #edf1ff;
+  color: var(--accent);
+}
+
+.nav-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* ============================================================
+   COLUNA DO MEIO (LISTA)
+============================================================ */
+.dash-col-middle {
+  background: var(--bg);
+  padding: 20px;
+  border-right: 1px solid var(--border-soft);
+  overflow-y: auto;
+}
+
+.dash-middle-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 18px 18px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* SEARCH */
+.dash-search-wrap {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.dash-search {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px 0 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dash-search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(76, 110, 245, 0.16);
+}
+
+.dash-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 9px;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* Ícones genéricos */
+.icon-svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* ============================================================
+   BARRA DE FILTROS PREMIUM (OPÇÃO B)
+============================================================ */
+.dash-filters-premium {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-right: 4px;
+}
+
+.filter-pill {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #f8f9ff;
+  color: var(--text-soft);
+  font-size: 13px;
+  padding: 6px 10px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.filter-pill:hover {
+  background: var(--bg-hover);
+}
+
+.filter-pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.filter-pill .icon-svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ============================================================
+   LISTA DE CREDENCIAIS
+============================================================ */
+.dash-list {
+  margin-top: 4px;
+  min-height: 0;
+}
+
+.dash-list-item {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 8px 6px;
+  border-radius: var(--radius-sm);
+
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.dash-list-item:hover {
+  background: var(--bg-hover);
+}
+
+.dash-list-item.active {
+  background: #e4ecff;
+  border: 1px solid #c3d2ff;
+}
+
+/* Avatar */
+.item-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--bg-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.item-avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
+.item-avatar-fallback {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Conteúdo */
+.item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.item-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 2px 0;
+}
+
+.item-sub {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.item-meta {
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Estado vazio / genérico */
+.dash-empty {
+  padding: 20px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+/* ============================================================
+   LOADER ANIMADO
+============================================================ */
+.loader-spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: dash-spin 0.8s linear infinite;
+}
+
+@keyframes dash-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dash-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ============================================================
+   COLUNA DIREITA (DETAILS)
+============================================================ */
+.dash-col-right {
+  background: var(--bg);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.dash-placeholder-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Card de detalhes */
+.details-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 22px 22px 18px 22px;
+}
+
+/* HEADER DETAILS */
+.details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.details-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.details-url {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.details-url:hover {
+  text-decoration: underline;
+}
+
+.details-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Botões de ícone */
+.icon-button {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.icon-button:hover {
+  background: var(--bg-hover);
+}
+
+.icon-button.icon-danger:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* CAMPOS DETAILS */
+.details-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.details-field-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+}
+
+.details-field-group input,
+.details-field-group textarea {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 14px;
+  padding: 8px 10px;
+  transition: 0.15s ease;
+}
+
+.details-field-group input:focus,
+.details-field-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(76, 110, 245, 0.13);
+}
+
+.details-field-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.field-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* FOOTER DETAILS */
+.details-footer {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-primary,
+.btn-secondary {
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+}
+
+/* ============================================================
+   MODAL (Estilo Auth — Premium, com blur)
+============================================================ */
+
+.dash-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: modal-fade-in 0.25s ease forwards;
+  z-index: 999;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(6px);
+  }
+}
+
+.dash-modal {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 26px 28px 22px 28px;
+  width: 360px;
+  max-width: 92vw;
+
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
+
+  animation: modal-pop 0.22s ease forwards;
+  transform-origin: center;
+}
+
+@keyframes modal-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.dash-modal-title {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dash-modal-text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.45;
+}
+
+.dash-modal-footer {
+  margin-top: 22px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Botão normal */
+.modal-btn {
+  height: 36px;
+  padding: 0 18px;
+  font-size: 14px;
+
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #f3f4f6;
+  color: var(--text);
+
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.modal-btn:hover {
+  background: var(--bg-hover);
+}
+
+/* Botão de exclusão */
+.modal-btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.modal-btn-danger:hover {
+  background: #c92a2a;
+}
