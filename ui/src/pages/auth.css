@@ -1,0 +1,321 @@
+/* Remove scroll e garante altura total */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  font-family: Inter, sans-serif;
+}
+
+/* Container central responsivo */
+.auth-wrapper {
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(145deg, #f7f8fa, #edf0f4);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Janela com efeito glass e tamanho adaptativo */
+.auth-window {
+  width: clamp(280px, 85vw, 380px);
+  max-height: 90vh; /* impede overflow vertical */
+  overflow: visible;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(22px);
+
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.08),
+    inset 0 0 1px rgba(255, 255, 255, 0.5);
+
+  transition: height 0.25s ease;
+}
+
+/* Título simples e centralizado */
+.auth-title {
+  text-align: center;
+  font-size: 1.45rem;
+  margin-bottom: 16px;
+  color: #26272b;
+  font-weight: 500;
+}
+
+/* Contêiner das tabs */
+.auth-tabs {
+  display: flex;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.04);
+  margin-bottom: 16px;
+}
+
+/* Tab padrão */
+.auth-tab {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 8px;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  font-weight: 500;
+  color: #666;
+  transition: 0.22s ease;
+}
+
+/* Tab ativa */
+.auth-tab.active {
+  background: rgba(0,0,0,0.08);
+  color: #1b1c21;
+}
+
+/* Layout do formulário */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+/* Wrapper para permitir o botão de mostrar senha */
+.auth-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* Input com estilo premium */
+.auth-form input {
+  width: 100%;
+  padding: 12px 42px 12px 13px;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(0,0,0,0.12);
+
+  font-size: 0.95rem;
+  color: #1e1f24;
+
+  transition: 0.22s ease;
+  box-sizing: border-box;
+}
+
+.auth-form input::placeholder {
+  color: #8f9299;
+}
+
+/* Foco do input */
+.auth-form input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(84, 107, 255, 0.55);
+  box-shadow:
+    0 0 0 2px rgba(84, 107, 255, 0.20);
+}
+
+/* Botão do ícone de mostrar senha */
+.show-pass-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+  padding: 0;
+
+  opacity: 0.55;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.show-pass-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-50%) scale(1.08);
+}
+
+/* Ícone */
+.show-pass-btn svg {
+  stroke: #555;
+  transition: stroke 0.2s ease;
+}
+
+.show-pass-btn:hover svg {
+  stroke: #1d1f24;
+}
+
+/* Desativa visualização externa */
+.password-check {
+  display: none !important;
+}
+
+/* Estado: senhas combinam */
+.auth-form input.match {
+  border-color: #5f78ff !important;
+  background: rgba(95, 120, 255, 0.08) !important;
+
+  box-shadow:
+    0 0 0 2px rgba(95, 120, 255, 0.25),
+    0 0 6px rgba(95, 120, 255, 0.20) !important;
+}
+
+/* Estado: senhas não combinam */
+.auth-form input.no-match {
+  border-color: #ff6b6b !important;
+  background: rgba(255, 107, 107, 0.10) !important;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 107, 107, 0.25),
+    0 0 6px rgba(255, 107, 107, 0.20) !important;
+}
+
+/* Botão principal */
+.auth-btn {
+  padding: 13px;
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #5f78ff, #546bff);
+  border: none;
+
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: 0.22s ease;
+
+  box-shadow: 0 6px 20px rgba(84, 107, 255, 0.28);
+}
+
+.auth-btn:hover {
+  background: linear-gradient(135deg, #687fff, #5a73ff);
+  box-shadow: 0 8px 24px rgba(84, 107, 255, 0.40);
+}
+
+/* ============================================================
+   MODAL PREMIUM (SUCESSO)
+============================================================ */
+
+/* Backdrop com blur */
+.auth-modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: fadeIn 0.28s ease forwards;
+  z-index: 9999;
+}
+
+/* Janela principal */
+.auth-modal {
+  width: clamp(260px, 80vw, 360px);
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(22px);
+  padding: 24px;
+
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.08),
+    inset 0 0 1px rgba(255, 255, 255, 0.4);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  animation: modalPop 0.25s ease forwards;
+}
+
+/* Título do modal */
+.auth-modal-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1e1f24;
+  margin-bottom: 8px;
+}
+
+/* Texto */
+.auth-modal-text {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+/* Footer (botão único) */
+.auth-modal-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Botão principal (segue o estilo do auth-btn) */
+.auth-modal-btn-primary {
+  padding: 11px 32px;
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #5f78ff, #546bff);
+  border: none;
+
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: 0.22s ease;
+
+  box-shadow: 0 6px 18px rgba(84, 107, 255, 0.28);
+}
+
+.auth-modal-btn-primary:hover {
+  background: linear-gradient(135deg, #687fff, #5a73ff);
+  box-shadow: 0 8px 26px rgba(84, 107, 255, 0.38);
+}
+
+/* ===============================
+   ANIMAÇÕES
+================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modalPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.86) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

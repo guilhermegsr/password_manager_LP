@@ -1,81 +1,107 @@
 # Password Manager
 
-## Descrição
+## Visão Geral
 
-Gerenciador de senhas local executado via linha de comando (CLI), desenvolvido em Rust. Todos os dados são armazenados
-de forma local utilizando SQLite, com senhas e notas criptografadas. Nenhum dado é enviado para qualquer serviço
-externo.
+Password Manager é um gerenciador de senhas local, desenvolvido em Rust, que pode ser utilizado tanto via linha de comando (CLI) quanto por uma interface gráfica desktop construída com Tauri e React. Todos os dados são armazenados exclusivamente no ambiente local do usuário, utilizando SQLite, com senhas e informações sensíveis devidamente criptografadas. Nenhum dado é transmitido para serviços externos.
+
+---
 
 ## Funcionalidades
 
-* Cadastro de usuário
-* Autenticação e abertura de cofre
+* Cadastro de usuários
+* Autenticação segura e abertura de cofre criptografado
 * Criação, listagem, busca, atualização e remoção de credenciais
-* Armazenamento de senhas e notas criptografadas
+* Armazenamento criptografado de senhas e notas
+* Execução via CLI ou aplicação desktop
 
-## Tecnologias Principais
+---
 
-| Categoria                | Biblioteca                  |
-|--------------------------|-----------------------------|
-| Banco de dados           | rusqlite                    |
-| Criptografia             | age, argon2, zeroize        |
-| Identidade e datas       | uuid, chrono                |
-| Configuração de ambiente | dotenvy                     |
-| Logging                  | tracing, tracing-subscriber |
+## Tecnologias Utilizadas
+
+| Camada             | Tecnologias / Bibliotecas   |
+| ------------------ | --------------------------- |
+| Banco de dados     | rusqlite                    |
+| Criptografia       | age, argon2, zeroize        |
+| Identidade e datas | uuid, chrono                |
+| Configuração       | dotenvy                     |
+| Logging            | tracing, tracing-subscriber |
+| Interface gráfica  | Tauri, React, Vite          |
+
+---
 
 ## Requisitos
 
 * Rust 1.72 ou superior
+* Node.js
+* Bun
+* Dependências do sistema necessárias para o Tauri
 
-## Instalação
-
-```
-cargo build
-```
+---
 
 ## Configuração de Ambiente
 
-A aplicação carrega automaticamente o arquivo `.env` conforme a variável `APP_ENV`.
+A aplicação carrega automaticamente o arquivo `.env` de acordo com o ambiente definido.
 
-Exemplos de arquivos:
+Exemplo de `.env.development`:
 
-`.env.development`:
-
-```
+```env
 RUST_LOG=debug
 DATABASE_URL=data/dev.db
 ```
 
-`.env.production`:
+Exemplo de `.env.production`:
 
-```
+```env
 RUST_LOG=info
 DATABASE_URL=data/prod.db
 ```
 
+---
+
 ## Execução
 
-Ambiente de desenvolvimento (padrão):
+### Backend (CLI)
 
-```
+Ambiente de desenvolvimento:
+
+```bash
 cargo run
 ```
 
 Ambiente de produção:
 
-```
+```bash
 APP_ENV=production cargo run
 ```
 
-## Estrutura do Banco
+---
 
-| Entidade   | Campos                                                                                |
-|------------|---------------------------------------------------------------------------------------|
+### Aplicação Desktop (Frontend + Backend)
+
+No diretório da interface gráfica:
+
+```bash
+bun run tauri dev
+```
+
+Esse comando inicia simultaneamente:
+
+* O frontend React
+* O backend Rust integrado ao Tauri
+
+---
+
+## Estrutura do Banco de Dados
+
+| Entidade   | Campos principais                                                                     |
+| ---------- | ------------------------------------------------------------------------------------- |
 | User       | id, username, password_hash, created_at, updated_at                                   |
 | Vault      | id, user_id, vault_key_cipher, created_at, updated_at                                 |
 | Credential | id, vault_id, name, username?, url?, notes?, password_cipher?, created_at, updated_at |
 
-## Fluxo de Uso
+---
+
+## Fluxo de Uso (CLI)
 
 Menu inicial:
 
@@ -97,8 +123,11 @@ Após login:
 [0] Logout
 ```
 
-## Observações
+---
 
-* Senhas não são armazenadas em texto plano
+## Considerações de Segurança
+
+* Senhas nunca são armazenadas em texto plano
 * A chave do cofre permanece cifrada
-* Dados sensíveis são removidos da memória com `zeroize`
+* Dados sensíveis são removidos da memória quando não são mais necessários, utilizando `zeroize`
+* A aplicação funciona totalmente offline

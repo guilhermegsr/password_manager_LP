@@ -131,6 +131,17 @@ impl User {
             updated_at,
         }
     }
+
+    pub fn from_session(username: String) -> Self {
+        let now = Utc::now();
+        Self {
+            id: Uuid::new_v4(),
+            username,
+            password_hash: Vec::new(),
+            created_at: now,
+            updated_at: now,
+        }
+    }
 }
 
 /// Valida regras comerciais de nome de usuário.
