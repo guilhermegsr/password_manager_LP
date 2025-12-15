@@ -78,11 +78,47 @@ APP_ENV=production cargo run
 
 ### Aplicação Desktop (Frontend + Backend)
 
-No diretório da interface gráfica:
+A aplicação desktop é construída com **Tauri**, integrando **frontend (React)** e **backend (Rust)** em um único binário.
+
+#### Pré-requisitos
+
+* **Bun** (gerenciador de pacotes e runtime JavaScript)
+  👉 [https://bun.sh](https://bun.sh)
+
+* **Tauri CLI** (interface de linha de comando do Tauri)
+
+```bash
+cargo install tauri-cli
+```
+
+> Certifique-se também de que as dependências do sistema para o Tauri estejam instaladas conforme seu sistema operacional.
+
+---
+
+#### Executando em modo de desenvolvimento
+
+A partir do diretório raiz do projeto, acesse a interface gráfica e instale as dependências:
+
+```bash
+cd ui
+bun install
+```
+
+Em seguida, inicie o ambiente de desenvolvimento:
 
 ```bash
 bun run tauri dev
 ```
+
+---
+
+#### O que esse comando faz
+
+O comando acima inicia, de forma integrada:
+
+* **Frontend React**, com hot reload
+* **Backend Rust**, executado via Tauri
+* **WebView nativo**, responsável pela renderização da interface
 
 Esse comando inicia simultaneamente:
 
